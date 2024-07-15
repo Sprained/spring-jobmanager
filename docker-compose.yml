@@ -1,0 +1,10 @@
+services:
+  db:
+    container_name: jobmanager_database
+    image: postgres
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: jobmanager
