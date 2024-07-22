@@ -1,6 +1,5 @@
-package com.gabrielresende.jobmanager.modules.candidate.controller;
+package com.gabrielresende.jobmanager.modules.candidate.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -8,10 +7,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.gabrielresende.jobmanager.exceptions.UserFoundException;
 import com.gabrielresende.jobmanager.modules.candidate.CandidateEntity;
-import com.gabrielresende.jobmanager.modules.candidate.CandidateRepository;
-import com.gabrielresende.jobmanager.modules.candidate.useCases.CreateCandidateUseCase;
+import com.gabrielresende.jobmanager.modules.candidate.usecases.CreateCandidateUseCase;
 
 import jakarta.validation.Valid;
 
@@ -19,11 +16,14 @@ import jakarta.validation.Valid;
 @RequestMapping("/candidate")
 public class CandidateController {
 
-    @Autowired
-    private CreateCandidateUseCase createCandidateUseCase;
+    private final CreateCandidateUseCase createCandidateUseCase;
+
+    public CandidateController(CreateCandidateUseCase createCandidateUseCase) {
+        this.createCandidateUseCase = createCandidateUseCase;
+    }
 
     @PostMapping("")
-    public ResponseEntity create(@Valid @RequestBody CandidateEntity candidateEntity) {
+    public ResponseEntity<String> create(@Valid @RequestBody CandidateEntity candidateEntity) {
         try {
             this.createCandidateUseCase.execute(candidateEntity);
 
